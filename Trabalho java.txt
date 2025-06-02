@@ -1,0 +1,124 @@
+import java.util.Scanner;
+
+public class BancoEstacio {
+    
+    public static void main(String args[]) {
+        Scanner leitor = new Scanner(System.in);
+        
+        
+        String usuarioCorreto = "roger";
+        String senhaCorreta = "1234";
+        boolean loginBemSucedido = false;
+        
+        
+        System.out.println("*** Bem-vindo ao Banco Estácio ***");
+        System.out.println("Digite seu usuário:");
+        String usuario = leitor.nextLine();
+        System.out.println("Digite sua senha:");
+        String senha = leitor.nextLine();
+        
+        
+        if (usuario.equals(usuarioCorreto) && senha.equals(senhaCorreta)) {
+            loginBemSucedido = true;
+            System.out.println("Login bem-sucedido!");
+        } else {
+            System.out.println("Usuário ou senha incorretos. Encerrando o programa.");
+            return;
+        }
+        
+        
+        if (loginBemSucedido) {
+            System.out.println("Meu banco");
+
+            String nome = "Angelo";
+            String tipoDeConta = "corrente";
+            String numeroConta = "12345-6";
+            double saldo = 0;
+            int opc = 0;
+
+            System.out.println("*****************");
+            System.out.println("""
+                Nome do cliente: %s
+                Tipo de conta: %s
+                Número da conta: %s
+                Saldo atual: %.2f
+                """.formatted(nome, tipoDeConta, numeroConta, saldo)
+            );
+            System.out.println("******************");
+            
+            String menu = """
+            
+                Operações
+                
+                1- Consultar saldo
+                2- Depositar
+                3- Transferir
+                4- Pagamento de boletos
+                5- Sair
+            """;
+            
+            while (opc != 5) {
+                System.out.println(menu);
+                System.out.println("Digite a operação desejada!");
+                opc = leitor.nextInt();
+                
+                if (opc == 1) {
+                    System.out.println("O seu saldo é %.2f\n".formatted(saldo));
+                }
+                else if (opc == 2) {
+                    System.out.println("Digite o valor do depósito");
+                    double depositar = leitor.nextDouble();
+                    if (depositar > 0) {
+                        saldo += depositar;
+                        System.out.println("""
+                            Saldo atual: %.2f
+                            """.formatted(saldo));
+                    } else {
+                        System.out.println("Valor inválido. O depósito deve ser maior que zero.");
+                    }
+                }
+                else if (opc == 3) {
+                    System.out.println("Digite o valor da transferência");
+                    double transferir = leitor.nextDouble();
+                    if (transferir <= 0) {
+                        System.out.println("Valor inválido. A transferência deve ser maior que zero.");
+                    }
+                    else if (saldo < transferir) {
+                        System.out.println("Transferência não realizada, saldo insuficiente");
+                    }
+                    else {
+                        saldo -= transferir;
+                        System.out.println("""
+                            Transferência realizada com sucesso!
+                            Saldo atual: %.2f""".formatted(saldo));
+                    }
+                }
+                else if (opc == 4) {
+                    System.out.println("Informe o valor do boleto a ser pago com taxa de 2%");
+                    double boleto = leitor.nextDouble();
+                    if (boleto <= 0) {
+                        System.out.println("Valor inválido. O boleto deve ser maior que zero.");
+                    }
+                    else {
+                        double boletoComTaxa = boleto * 1.02;
+                        if (saldo < boletoComTaxa) {
+                            System.out.println("Pagamento não realizado, saldo insuficiente");
+                        }
+                        else {
+                            saldo -= boletoComTaxa;
+                            System.out.println("Pagamento realizado com sucesso");
+                            System.out.println("Saldo atual: %.2f".formatted(saldo));
+                        }
+                    }
+                }
+                else if (opc == 5) {
+                    System.out.println("Obrigado por utilizar nossos serviços.");
+                }
+                else {
+                    System.out.println("Opção inválida...");
+                }
+            }
+            System.out.println("Fim do Programa");
+        }
+    }
+}
